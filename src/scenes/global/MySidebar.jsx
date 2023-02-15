@@ -6,11 +6,10 @@ import { tokens } from '../../theme';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import StudentsOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import TeachersOutlinedIcon from '@mui/icons-material/Person2Outlined';
-import MessageOutlinedIcon from '@mui/icons-material/MailOutlined';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 const Item = ({ title, to, icon, selected, setSelected, toggleSidebar }) => {
 	const theme = useTheme();
@@ -40,13 +39,12 @@ const MySidebar = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
-	let { pathname } = useLocation();
+	const { pathname } = useLocation();
 	const pathList = {
 		'/': 'Главная',
 		'/schedule': 'Расписание',
-		'/teachers': 'Педагоги',
-		'/students': 'Ученики',
-		'/message': 'Связь',
+		'/clients': 'Клиенты',
+		'/add_clients': 'Добавление',
 		'/settings': 'Настройки',
 	};
 	const [selected, setSelected] = useState(pathList[pathname]);
@@ -89,13 +87,10 @@ const MySidebar = () => {
 						{!collapsed && (
 							<Box
 								display='flex'
-								justifyContent='space-between'
+								justifyContent='flex-end'
 								alignItems='center'
 								ml='15px'
 							>
-								<Typography variant='h3' color={colors.grey[100]}>
-									SolomonPlus
-								</Typography>
 								<IconButton
 									onClick={
 										broken ? () => toggleSidebar() : () => collapseSidebar()
@@ -113,14 +108,14 @@ const MySidebar = () => {
 								justifyContent='center'
 								alignItems='center'
 								sx={{
-									'& .avater-image': {
+									'& .avatar-image': {
 										backgroundColor: colors.primary[700],
 										objectFit: 'cover',
 									},
 								}}
 							>
 								<img
-									className='avater-image'
+									className='avatar-image'
 									alt='profile user'
 									width='100px'
 									height='100px'
@@ -140,6 +135,9 @@ const MySidebar = () => {
 									sx={{ m: '10px 0 0 0' }}
 								>
 									Петр Ян
+								</Typography>
+								<Typography variant='h6' color={colors.greenAccent[500]}>
+									Администратор
 								</Typography>
 							</Box>
 						</Box>
@@ -162,25 +160,17 @@ const MySidebar = () => {
 							toggleSidebar={toggleSidebar}
 						/>
 						<Item
-							title='Педагоги'
-							to='/teachers'
-							icon={<TeachersOutlinedIcon />}
+							title='Клиенты'
+							to='/clients'
+							icon={<PeopleAltIcon />}
 							selected={selected}
 							setSelected={setSelected}
 							toggleSidebar={toggleSidebar}
 						/>
 						<Item
-							title='Ученики'
-							to='/students'
-							icon={<StudentsOutlinedIcon />}
-							selected={selected}
-							setSelected={setSelected}
-							toggleSidebar={toggleSidebar}
-						/>
-						<Item
-							title='Связь'
-							to='/message'
-							icon={<MessageOutlinedIcon />}
+							title='Добавление'
+							to='/add_client'
+							icon={<PersonAddAltIcon />}
 							selected={selected}
 							setSelected={setSelected}
 							toggleSidebar={toggleSidebar}

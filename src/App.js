@@ -3,8 +3,11 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 
 import Topbar from './scenes/global/Topbar';
-import Main from './scenes/Main';
+import Index from './scenes/main';
 import MySidebar from './scenes/global/MySidebar';
+import Clients from './scenes/clients';
+import AddNewClient from './scenes/addClient';
+import Schedule from './scenes/schedule';
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -18,7 +21,10 @@ function App() {
 					<main className='content'>
 						<Topbar />
 						<Routes>
-							<Route path={'/'} element={<Main />} />
+							<Route path={'/'} element={<Index />} />
+							<Route path={'/schedule'} element={<Schedule />} />
+							<Route path={'/clients'} element={<Clients />} />
+							<Route path={'/add_client'} element={<AddNewClient />} />
 						</Routes>
 					</main>
 				</div>
