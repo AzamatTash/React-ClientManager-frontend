@@ -68,7 +68,7 @@ const Clients = () => {
 
 			<Box
 				m='20px 0 0 0'
-				height='70vh'
+				height='75vh'
 				sx={{
 					'& .MuiDataGrid-root': {
 						border: 'none',

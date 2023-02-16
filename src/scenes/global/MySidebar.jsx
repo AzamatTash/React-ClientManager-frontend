@@ -62,11 +62,15 @@ const MySidebar = () => {
 					border: 'none',
 				},
 				'& .ps-menu-button:hover': {
-					color: `${colors.blueAccent[500]} !important`,
+					color: `${
+						theme.palette.mode === 'dark'
+							? colors.blueAccent[500]
+							: colors.greenAccent[500]
+					} !important`,
 					backgroundColor: 'transparent !important',
 				},
 				'& .ps-active': {
-					color: `${colors.greenAccent[500]} !important`,
+					color: `${theme.palette.secondary.main} !important`,
 					backgroundColor: 'transparent !important',
 				},
 			}}
@@ -136,7 +140,7 @@ const MySidebar = () => {
 								>
 									Петр Ян
 								</Typography>
-								<Typography variant='h6' color={colors.greenAccent[500]}>
+								<Typography variant='h6' color={theme.palette.secondary.main}>
 									Администратор
 								</Typography>
 							</Box>
