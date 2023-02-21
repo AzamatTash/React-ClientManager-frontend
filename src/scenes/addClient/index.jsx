@@ -28,7 +28,7 @@ const AddNewClient = () => {
 			<Formik
 				onSubmit={handleFormSubmit}
 				initialValues={initialValues}
-				validationSchema={GetCheckoutSchema}
+				validationSchema={GetCheckoutSchema().forAddClient()}
 			>
 				{({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
 					<form onSubmit={handleSubmit}>

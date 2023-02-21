@@ -75,36 +75,25 @@ const MySidebar = () => {
 				},
 			}}
 		>
-			<Sidebar breakPoint='md' backgroundColor={colors.primary[400]} rootStyles={{}}>
+			<Sidebar breakPoint='md' backgroundColor={colors.primary[400]}>
 				<Menu iconshape='square'>
-					<MenuItem
-						icon={
-							collapsed ? (
-								<MenuOutlinedIcon onClick={() => collapseSidebar()} />
-							) : undefined
-						}
-						style={{
-							margin: '10px 0 20px 0',
-							color: colors.grey[100],
-						}}
-					>
-						{!collapsed && (
-							<Box
-								display='flex'
-								justifyContent='flex-end'
-								alignItems='center'
-								ml='15px'
+					<Box p={'10px 20px'} textAlign={'right'}>
+						{collapsed ? (
+							<IconButton
+								onClick={() => collapseSidebar()}
+								sx={{ marginRight: '10px' }}
 							>
-								<IconButton
-									onClick={
-										broken ? () => toggleSidebar() : () => collapseSidebar()
-									}
-								>
-									<CloseOutlinedIcon />
-								</IconButton>
-							</Box>
+								<MenuOutlinedIcon />
+							</IconButton>
+						) : undefined}
+						{!collapsed && (
+							<IconButton
+								onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}
+							>
+								<CloseOutlinedIcon />
+							</IconButton>
 						)}
-					</MenuItem>
+					</Box>
 					{!collapsed && (
 						<Box mb='25px'>
 							<Box

@@ -5,62 +5,106 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import { tokens } from '../../theme';
+import { clearOtherData, setCurrentDay } from '../../redux/slices/eventSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header';
-// import { tokens } from '../../theme';
-import SidebarForEvents from '../../components/SidebarForEvents';
+import SidebarForEvents from '../global/SidebarForEvents';
+import { setEvents } from '../../redux/slices/eventsSlice';
 
 const Schedule = () => {
-	// const theme = useTheme();
-	// const colors = tokens(theme.palette.mode);
 	const [isActive, setIsActive] = useState(false);
-	// const [currentEvents, setCurrentEvents] = useState([]);
+	const [readMode, setReadMode] = useState(false);
+	const [moreInfo, setMoreInfo] = useState(null);
 
-	const handleDateClick = (selected) => {
-		setIsActive(!isActive);
-		let title;
-		const calendarApi = selected.view.calendar;
-		calendarApi.unselect();
+	const theme = useTheme();
+	const colors = tokens(theme.palette.mode);
 
-		if (title) {
-			calendarApi.addEvent({
-				id: `${selected.dateStr}-${title}`,
-				title,
+	const dispatch = useDispatch();
+	const event = useSelector((state) => state.event);
+	const { events } = useSelector((state) => state.events);
+
+	const handleDayClick = (selected) => {
+		dispatch(
+			setCurrentDay({
+				id: new Date().getTime(),
 				start: selected.startStr,
-				end: selected.endStr,
-				allDay: selected.allDay,
-			});
-		}
+			})
+		);
+		setReadMode(false);
+		setIsActive(true);
+	};
+
+	const handleSaveEvent = () => {
+		dispatch(setEvents(event));
+		setIsActive(false);
+		dispatch(clearOtherData());
 	};
 
 	const handleEventClick = (selected) => {
-		if (window.confirm(`Are you sure you want to delete the event '${selected.event.title}'`)) {
-			selected.event.remove();
-		}
+		setReadMode(true);
+		setIsActive(true);
+		const findId = selected.event.id;
+		events.find((item) => {
+			if (+findId === item.id) {
+				setMoreInfo(item);
+			}
+		});
 	};
+
 	return (
-		<Box m={'0px 20px'} maxHeight={'100vh'}>
+		<Box
+			m={'0px 20px'}
+			maxHeight={'100vh'}
+			sx={{
+				'.fc-theme-standard .fc-list-day-cushion': {
+					backgroundColor: theme.palette.secondary.main,
+				},
+				'.fc .fc-button-primary': {
+					backgroundColor: theme.palette.secondary.main,
+				},
+				'.fc .fc-button-primary:not(:disabled).fc-button-active': {
+					backgroundColor:
+						theme.palette.mode === 'dark'
+							? colors.greenAccent[700]
+							: colors.blueAccent[300],
+				},
+				'.fc .fc-button-primary:hover': {
+					backgroundColor:
+						theme.palette.mode === 'dark'
+							? colors.greenAccent[700]
+							: colors.blueAccent[300],
+				},
+			}}
+		>
 			<Header title={'Расписание'}></Header>
 			<FullCalendar
 				height='75vh'
 				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
 				headerToolbar={{
-					left: 'prev,next today',
+					left: 'prev,next',
 					center: 'title',
-					right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
+					right: 'dayGridMonth,listMonth',
 				}}
+				titleFormat={{ month: 'short' }}
 				locale={ruLocale}
 				initialView='dayGridMonth'
 				editable={true}
 				selectable={true}
 				selectMirror={true}
 				dayMaxEvents={true}
-				select={handleDateClick}
+				select={handleDayClick}
 				eventClick={handleEventClick}
-				// eventsSet={(events) => setCurrentEvents(events)}
-				initialEvents={[]}
+				events={events}
 			/>
-			<SidebarForEvents isActive={isActive} />
+			<SidebarForEvents
+				isActive={isActive}
+				readMode={readMode}
+				moreInfo={moreInfo}
+				setIsActive={setIsActive}
+				handleSaveEvent={handleSaveEvent}
+			/>
 		</Box>
 	);
 };
