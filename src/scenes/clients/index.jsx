@@ -19,34 +19,36 @@ const Clients = () => {
 	};
 
 	const columns = [
-		{ field: 'id', headerName: 'ID', minWidth: 30, maxWidth: 40 },
+		{ field: 'id', headerName: 'ID', minWidth: 35, maxWidth: 40 },
 		{
 			field: 'name',
 			headerName: 'ФИО',
 			flex: 1,
+			minWidth: 120,
 		},
 		{
 			field: 'instagram',
 			headerName: 'Instagram',
 			flex: 1,
+			minWidth: 100,
 		},
 		{
 			field: 'phone',
 			headerName: 'Телефон',
 			flex: 1,
+			minWidth: 100,
 		},
 		{
 			field: 'visits',
 			headerName: 'Посищений',
 			flex: 1,
-			minWidth: 100,
-			maxWidth: 100,
+			minWidth: 80,
 		},
 		{
 			field: 'delete',
 			headerName: '',
 			sortable: false,
-			width: 50,
+			width: 10,
 			renderCell: (params) => (
 				<IconButton onClick={() => handleDelete(params.row.id)}>
 					<DeleteIcon />
@@ -102,9 +104,28 @@ const Clients = () => {
 					'& .MuiDataGrid-cellContent': {
 						fontSize: '13px',
 					},
+					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
+						width: '0.4em',
+						height: '0.4em',
+					},
+					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track': {
+						background: colors.grey[700],
+					},
+					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
+						backgroundColor: colors.blueAccent[500],
+					},
+					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
+						background: '#555',
+					},
 				}}
 			>
-				<DataGrid rows={data} columns={columns} pageSize={10} />
+				<DataGrid
+					rows={data}
+					columns={columns}
+					disableColumnMenu={true}
+					disableRowSelectionOnClick={true}
+					hideFooter={true}
+				/>
 			</Box>
 		</Box>
 	);

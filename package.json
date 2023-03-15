@@ -16,10 +16,6 @@
     "@mui/x-data-grid": "^5.17.23",
     "@mui/x-date-pickers": "^5.0.18",
     "@reduxjs/toolkit": "^1.9.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.2.1",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
     "prettier": "^2.8.4",
@@ -29,6 +25,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.4.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
   },

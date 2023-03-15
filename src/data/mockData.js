@@ -57,8 +57,8 @@ export const mockDataClients = [
 	},
 	{
 		id: 9,
-		name: 'Harvey Roxie',
-		instagram: '@harveyroxie',
+		name: 'Harvey Ronameie',
+		instagram: '@harveyronameie',
 		phone: '(444)555-6239',
 		visits: 13,
 	},
@@ -120,9 +120,111 @@ export const mockDataClients = [
 	},
 	{
 		id: 18,
-		name: 'Harvey Roxie',
-		instagram: '@harveyroxie',
+		name: 'Harvey Ronameie',
+		instagram: '@harveyronameie',
 		phone: '(444)555-6239',
 		visits: 13,
+	},
+];
+
+export const mockLineData = [
+	{
+		month: 'янв',
+		amount: 20500,
+	},
+	{
+		month: 'февр',
+		amount: 10500,
+	},
+	{
+		month: 'март',
+		amount: 40000,
+	},
+	{
+		month: 'апр',
+		amount: 37000,
+	},
+	{
+		month: 'май',
+		amount: 34000,
+	},
+	{
+		month: 'июнь',
+		amount: 38000,
+	},
+	{
+		month: 'июль',
+		amount: 10000,
+	},
+	{
+		month: 'авг',
+		amount: 18000,
+	},
+	{
+		month: 'сент',
+		amount: 16000,
+	},
+	{
+		month: 'окт',
+		amount: 20800,
+	},
+	{
+		month: 'нояб',
+		amount: 13700,
+	},
+	{
+		month: 'дек',
+		amount: 24000,
+	},
+];
+
+export const mockBarData = [
+	{
+		month: 'янв',
+		visits: 10,
+	},
+	{
+		month: 'февр',
+		visits: 6,
+	},
+	{
+		month: 'март',
+		visits: 8,
+	},
+	{
+		month: 'апр',
+		visits: 14,
+	},
+	{
+		month: 'май',
+		visits: 18,
+	},
+	{
+		month: 'июнь',
+		visits: 16,
+	},
+	{
+		month: 'июль',
+		visits: 20,
+	},
+	{
+		month: 'авг',
+		visits: 18,
+	},
+	{
+		month: 'сент',
+		visits: 16,
+	},
+	{
+		month: 'окт',
+		visits: 25,
+	},
+	{
+		month: 'нояб',
+		visits: 17,
+	},
+	{
+		month: 'дек',
+		visits: 19,
 	},
 ];

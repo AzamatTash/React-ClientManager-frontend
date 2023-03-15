@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 
 import Topbar from './scenes/global/Topbar';
-import Index from './scenes/main';
+import Main from './scenes/main';
 import MySidebar from './scenes/global/MySidebar';
 import Clients from './scenes/clients';
 import AddNewClient from './scenes/addClient';
@@ -21,7 +21,7 @@ function App() {
 					<main className='content'>
 						<Topbar />
 						<Routes>
-							<Route path={'/'} element={<Index />} />
+							<Route path={'/'} element={<Main />} />
 							<Route path={'/schedule'} element={<Schedule />} />
 							<Route path={'/clients'} element={<Clients />} />
 							<Route path={'/add_client'} element={<AddNewClient />} />

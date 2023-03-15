@@ -24,7 +24,6 @@ const AddNewClient = () => {
 	return (
 		<Box m={'0px 20px'} maxHeight={'100vh'}>
 			<Header title='Добавление клиента' />
-
 			<Formik
 				onSubmit={handleFormSubmit}
 				initialValues={initialValues}
