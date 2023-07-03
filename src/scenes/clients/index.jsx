@@ -5,8 +5,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { mockDataClients } from '../../data/mockData';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
+import Options from '../../components/options/Options';
 
 const Clients = () => {
 	const theme = useTheme();
@@ -49,11 +49,7 @@ const Clients = () => {
 			headerName: '',
 			sortable: false,
 			width: 10,
-			renderCell: (params) => (
-				<IconButton onClick={() => handleDelete(params.row.id)}>
-					<DeleteIcon />
-				</IconButton>
-			),
+			renderCell: (params) => <Options delete={() => handleDelete(params.row.id)} />,
 		},
 	];
 

@@ -5,13 +5,18 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
+
 import { Box, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
-import { clearOtherData, setCurrentDay } from '../../redux/slices/eventSlice';
-import { useDispatch, useSelector } from 'react-redux';
+
+
 import Header from '../../components/Header';
 import SidebarForEvents from '../global/SidebarForEvents';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { setEvents } from '../../redux/slices/eventsSlice';
+import { clearAllData, setCurrentDay } from '../../redux/slices/eventSlice';
+
 
 const Schedule = () => {
 	const [isActive, setIsActive] = useState(false);
@@ -26,20 +31,24 @@ const Schedule = () => {
 	const { events } = useSelector((state) => state.events);
 
 	const handleDayClick = (selected) => {
-		dispatch(
-			setCurrentDay({
-				id: new Date().getTime(),
-				start: selected.startStr,
-			})
-		);
-		setReadMode(false);
-		setIsActive(true);
+		if(!isActive) {
+			dispatch(
+				setCurrentDay({
+					id: new Date().getTime(),
+					start: selected.startStr,
+				})
+			);
+			setReadMode(false);
+			setIsActive(true);
+		} else {
+			setIsActive(false)
+		}
 	};
 
 	const handleSaveEvent = () => {
 		dispatch(setEvents(event));
 		setIsActive(false);
-		dispatch(clearOtherData());
+		dispatch(clearAllData());
 	};
 
 	const handleEventClick = (selected) => {
@@ -103,6 +112,7 @@ const Schedule = () => {
 				readMode={readMode}
 				moreInfo={moreInfo}
 				setIsActive={setIsActive}
+				setReadMode={setReadMode}
 				handleSaveEvent={handleSaveEvent}
 			/>
 		</Box>

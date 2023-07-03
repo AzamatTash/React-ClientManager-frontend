@@ -8,6 +8,7 @@ const initialState = {
 	clients: '',
 	comment: '',
 	price: '',
+	status: false,
 };
 
 export const eventSlice = createSlice({
@@ -33,7 +34,19 @@ export const eventSlice = createSlice({
 		setPriceData: (state, action) => {
 			state.price = +action.payload.price;
 		},
-		clearOtherData: (state) => {
+		setStatusData: (state, action) => {
+			state.status = action.payload.status;
+		},
+		setAllData: (state, action) => {
+			state.id = action.payload[0].id;
+			state.start = action.payload[0].start;
+			state.title = action.payload[0].title;
+			state.time = action.payload[0].time;
+			state.clients = action.payload[0].clients;
+			state.comment = action.payload[0].comment;
+			state.price = action.payload[0].price;
+		},
+		clearAllData: (state) => {
 			state.id = '';
 			state.start = '';
 			state.title = '';
@@ -52,7 +65,9 @@ export const {
 	setClientsData,
 	setCommentData,
 	setPriceData,
-	clearOtherData,
+	clearAllData,
+	setAllData,
+	setStatusData,
 } = eventSlice.actions;
 
 export default eventSlice.reducer;
