@@ -30,5 +30,28 @@ export const GetCheckoutSchema = () => {
 				visits: yup.number(),
 			});
 		},
+		forLogin: () => {
+			return yup.object().shape({
+				email: yup.string().required('обязательное поле'),
+				password: yup.string().required('обязательное поле'),
+			});
+		},
+		forRegister: () => {
+			return yup.object().shape({
+				name: yup
+					.string()
+					.min(3, 'имя слишком короткое')
+					.max(12, 'имя слишком длиное')
+					.required('обязательное поле'),
+				lastName: yup
+					.string()
+					.min(3, 'фамилия слишком короткая')
+					.max(12, 'фамилия слишком длиная')
+					.required('обязательное поле'),
+
+				email: yup.string().required('обязательное поле').email('не верный формат email'),
+				password: yup.string().required('обязательное поле'),
+			});
+		},
 	};
 };

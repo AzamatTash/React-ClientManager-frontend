@@ -22,7 +22,7 @@ const AddNewClient = () => {
 	};
 
 	return (
-		<Box m={'0px 20px'} maxHeight={'100vh'}>
+		<Box m={'0px 20px'} maxHeight={'100vh'} marginBottom={'20px'}>
 			<Header title='Добавление клиента' />
 			<Formik
 				onSubmit={handleFormSubmit}
@@ -41,7 +41,7 @@ const AddNewClient = () => {
 						>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Имя'
 								onBlur={handleBlur}
@@ -54,7 +54,7 @@ const AddNewClient = () => {
 							/>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Фамилия'
 								onBlur={handleBlur}
@@ -67,7 +67,7 @@ const AddNewClient = () => {
 							/>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Отчество'
 								onBlur={handleBlur}
@@ -80,7 +80,7 @@ const AddNewClient = () => {
 							/>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Instagram'
 								onBlur={handleBlur}
@@ -92,7 +92,7 @@ const AddNewClient = () => {
 							/>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Телефон'
 								onBlur={handleBlur}
@@ -105,7 +105,7 @@ const AddNewClient = () => {
 							/>
 							<TextField
 								fullWidth
-								variant='filled'
+								variant='outlined'
 								type='text'
 								label='Посищений'
 								onBlur={handleBlur}

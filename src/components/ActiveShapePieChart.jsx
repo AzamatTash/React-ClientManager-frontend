@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
-import { useTheme } from '@mui/material';
+import { PieChart, Pie, Sector, ResponsiveContainer, Tooltip } from 'recharts';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 const RenderActiveShape = (props) => {
 	const RADIAN = Math.PI / 180;
@@ -50,30 +50,41 @@ const RenderActiveShape = (props) => {
 				outerRadius={outerRadius + 10}
 				fill={fill}
 			/>
-			<path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
-			<circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
-			<text
-				x={ex + (cos >= 0 ? 1 : -1) * 12}
-				y={ey}
-				textAnchor={textAnchor}
-				fill={props.theme.palette.secondary.main}
-			>{`${props.text} ${value}`}</text>
-			{props.rate && (
-				<text
-					x={ex + (cos >= 0 ? 1 : -1) * 12}
-					y={ey}
-					dy={18}
-					textAnchor={textAnchor}
-					fill='#999'
-				>
-					{`(Rate ${(percent * 100).toFixed(2)}%)`}
-				</text>
+			{props.isMobileM ? (
+				''
+			) : (
+				<>
+					<path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
+					<circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
+					<text
+						x={ex + (cos >= 0 ? 1 : -1) * 12}
+						y={ey}
+						textAnchor={textAnchor}
+						fill={props.theme.palette.secondary.main}
+					>{`${props.text} ${value}`}</text>
+					{props.rate && (
+						<text
+							x={ex + (cos >= 0 ? 1 : -1) * 12}
+							y={ey}
+							dy={18}
+							textAnchor={textAnchor}
+							fill='#999'
+						>
+							{`${(percent * 100).toFixed(2)}%`}
+						</text>
+					)}
+				</>
 			)}
 		</g>
 	);
 };
 
 const ActiveShapePieChart = ({ data, rate, text }) => {
+	const isMobileL = useMediaQuery('(max-width:424px)');
+	const isMobileM = useMediaQuery('(max-width:376px)');
+	const isVisiblTooltip = useMediaQuery('(max-width:1200px, min-width:426px)');
+	console.log(isVisiblTooltip);
+
 	const theme = useTheme();
 
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -84,19 +95,27 @@ const ActiveShapePieChart = ({ data, rate, text }) => {
 
 	return (
 		<ResponsiveContainer width='100%' height='100%'>
-			<PieChart width={200} height={200}>
+			<PieChart width={400} height={400}>
 				<Pie
 					activeIndex={activeIndex}
-					activeShape={<RenderActiveShape theme={theme} rate={rate} text={text} />}
+					activeShape={
+						<RenderActiveShape
+							theme={theme}
+							rate={rate}
+							text={text}
+							isMobileM={isMobileM}
+						/>
+					}
 					data={data}
 					cx='50%'
 					cy='50%'
-					innerRadius={90}
-					outerRadius={110}
+					innerRadius={70}
+					outerRadius={90}
 					fill={theme.palette.secondary.main}
 					dataKey='value'
 					onMouseEnter={onPieEnter}
 				/>
+				{isMobileM && <Tooltip />}
 			</PieChart>
 		</ResponsiveContainer>
 	);

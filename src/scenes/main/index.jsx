@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import { Box, useMediaQuery } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import LineGraph from '../../components/LineGraph';
 import BarGraph from '../../components/BarGraph';
@@ -20,7 +21,7 @@ const data2 = [
 ];
 
 const Main = () => {
-	const isNonMobile = useMediaQuery('(min-width:600px)');
+	const isNonMobile = useMediaQuery('(min-width:934px)');
 
 	return (
 		<Box m={'0px 20px'} maxHeight={'100vh'}>
@@ -33,17 +34,19 @@ const Main = () => {
 						marginLeft: 'auto',
 						marginBottom: '20px',
 						display: 'flex',
-						justifyContent: 'space-between',
+						justifyContent: isNonMobile ? 'space-between' : 'center',
+						alignItems: 'center',
 						flexDirection: isNonMobile ? '' : 'column',
 					}}
 				>
 					<Box
 						sx={{
 							width: isNonMobile ? '50%' : '100%',
-							height: '40vh',
+							height: isNonMobile ? '40vh' : '270px',
+							marginBottom: isNonMobile ? '' : '20px',
 						}}
 					>
-						<Typography variant='h4' align={'center'}>
+						<Typography variant={isNonMobile ? 'h4' : 'h5'} align={'center'}>
 							Статус записей
 						</Typography>
 						<ActiveShapePieChart data={data1} rate={true} text='записей' />
@@ -51,10 +54,10 @@ const Main = () => {
 					<Box
 						sx={{
 							width: isNonMobile ? '50%' : '100%',
-							height: '40vh',
+							height: isNonMobile ? '40vh' : '270px',
 						}}
 					>
-						<Typography variant='h4' align={'center'}>
+						<Typography variant={isNonMobile ? 'h4' : 'h5'} align={'center'}>
 							Топ 5 клиентов по посищению
 						</Typography>
 						<ActiveShapePieChart
@@ -69,6 +72,7 @@ const Main = () => {
 			<Box
 				sx={{
 					width: '95%',
+					marginTop: '20px',
 					marginRight: 'auto',
 					marginLeft: isNonMobile ? 'auto' : '-10px',
 					display: 'flex',
@@ -79,7 +83,7 @@ const Main = () => {
 				<Box
 					sx={{
 						width: isNonMobile ? '50%' : '100%',
-						height: '40vh',
+						height: isNonMobile ? '40vh' : '270px',
 					}}
 				>
 					<LineGraph />
@@ -87,7 +91,7 @@ const Main = () => {
 				<Box
 					sx={{
 						width: isNonMobile ? '50%' : '100%',
-						height: '40vh',
+						height: isNonMobile ? '40vh' : '270px',
 					}}
 				>
 					<BarGraph />

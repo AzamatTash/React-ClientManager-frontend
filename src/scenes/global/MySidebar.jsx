@@ -75,7 +75,11 @@ const MySidebar = () => {
 				},
 			}}
 		>
-			<Sidebar breakPoint='md' backgroundColor={colors.primary[400]}>
+			<Sidebar
+				backgroundColor={colors.primary[400]}
+				transitionDuration={150}
+				customBreakPoint='1215px'
+			>
 				<Menu iconshape='square'>
 					<Box p={'10px 20px'} textAlign={'right'}>
 						{collapsed ? (

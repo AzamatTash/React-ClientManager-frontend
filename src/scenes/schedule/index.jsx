@@ -9,14 +9,12 @@ import listPlugin from '@fullcalendar/list';
 import { Box, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 
-
 import Header from '../../components/Header';
 import SidebarForEvents from '../global/SidebarForEvents';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setEvents } from '../../redux/slices/eventsSlice';
 import { clearAllData, setCurrentDay } from '../../redux/slices/eventSlice';
-
 
 const Schedule = () => {
 	const [isActive, setIsActive] = useState(false);
@@ -31,7 +29,7 @@ const Schedule = () => {
 	const { events } = useSelector((state) => state.events);
 
 	const handleDayClick = (selected) => {
-		if(!isActive) {
+		if (!isActive) {
 			dispatch(
 				setCurrentDay({
 					id: new Date().getTime(),
@@ -41,7 +39,7 @@ const Schedule = () => {
 			setReadMode(false);
 			setIsActive(true);
 		} else {
-			setIsActive(false)
+			setIsActive(false);
 		}
 	};
 
@@ -66,6 +64,7 @@ const Schedule = () => {
 		<Box
 			m={'0px 20px'}
 			maxHeight={'100vh'}
+			paddingBottom={'20px'}
 			sx={{
 				'.fc-theme-standard .fc-list-day-cushion': {
 					backgroundColor: theme.palette.secondary.main,
