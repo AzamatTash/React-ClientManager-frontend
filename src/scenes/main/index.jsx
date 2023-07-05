@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
 import { Box, useMediaQuery } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import LineGraph from '../../components/LineGraph';
 import BarGraph from '../../components/BarGraph';

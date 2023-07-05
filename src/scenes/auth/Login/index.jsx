@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, Button, useMediaQuery } from '@mui/material';
+import { useTheme, Button } from '@mui/material';
 import { Formik } from 'formik';
 import { CheckoutSchema } from '../../../utils/getCheckoutSchema';
 import AuthField from '../../../components/customFields/AuthField';
