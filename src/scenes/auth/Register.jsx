@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, useTheme, Button, useMediaQuery } from '@mui/material';
 import { Formik } from 'formik';
-import { CheckoutSchema } from '../../../utils/getCheckoutSchema';
-import AuthField from '../../../components/customFields/AuthField';
-import AuthWrapper from '../AuthWrapper';
-import AuthHeader from '../AuthHeader';
+import { CheckoutSchema } from '../../utils/getCheckoutSchema';
+import AuthField from '../../components/customFields/AuthField';
+import AuthWrapper from './AuthWrapper';
+import AuthHeader from './AuthHeader';
 
 const Register = () => {
 	const isNonMobile = useMediaQuery('(min-width:530px)');

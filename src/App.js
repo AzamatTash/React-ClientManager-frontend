@@ -9,12 +9,12 @@ import MySidebar from './scenes/global/MySidebar';
 import Clients from './scenes/clients';
 import AddNewClient from './scenes/addClient';
 import Schedule from './scenes/schedule';
-import Login from './scenes/auth/login';
-import Register from './scenes/auth/register';
+import Login from './scenes/auth/Login';
+import Register from './scenes/auth/Register';
 
 function App() {
 	const [theme, colorMode] = useMode();
-	const [isAuth, setIsAuth] = useState(true);
+	const [isAuth, setIsAuth] = useState(false);
 
 	return (
 		<ColorModeContext.Provider value={colorMode}>

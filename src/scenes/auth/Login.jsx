@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTheme, Button } from '@mui/material';
 import { Formik } from 'formik';
-import { CheckoutSchema } from '../../../utils/getCheckoutSchema';
-import AuthField from '../../../components/customFields/AuthField';
-import AuthWrapper from '../AuthWrapper';
-import AuthHeader from '../AuthHeader';
+import { CheckoutSchema } from '../../utils/getCheckoutSchema';
+import AuthField from '../../components/customFields/AuthField';
+import AuthWrapper from './AuthWrapper';
+import AuthHeader from './AuthHeader';
 
 const Login = ({ setIsAuth }) => {
 	const theme = useTheme();
