@@ -27,6 +27,7 @@ const StyledMenu = styled((props) => (
 		marginLeft: '-15px',
 		marginTop: theme.spacing(1),
 		minWidth: 140,
+		backgroundColor: theme.palette.background.default,
 		color: theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
 		boxShadow:
 			'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
@@ -49,14 +50,20 @@ const StyledMenu = styled((props) => (
 	},
 }));
 
-const Options = ({ onClick }) => {
+const Options = ({ removeItem, editItem }) => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClose = () => {
+	const handleDelete = () => {
+		removeItem();
+		setAnchorEl(null);
+	};
+
+	const handleEdit = () => {
+		editItem();
 		setAnchorEl(null);
 	};
 
@@ -72,13 +79,13 @@ const Options = ({ onClick }) => {
 				}}
 				anchorEl={anchorEl}
 				open={open}
-				onClick={handleClose}
+				onClick={() => setAnchorEl(null)}
 			>
-				<MenuItem onClick={handleClose} disableRipple>
+				<MenuItem onClick={handleEdit} disableRipple>
 					<EditIcon />
 					Изменить
 				</MenuItem>
-				<MenuItem onClick={handleClose} disableRipple>
+				<MenuItem onClick={handleDelete} disableRipple>
 					<DeleteIcon />
 					Удалить
 				</MenuItem>

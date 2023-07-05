@@ -1,20 +1,20 @@
+import { useState } from 'react';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import Topbar from './scenes/global/Topbar';
-import Main from './scenes/main';
+import Main from './scenes/Main';
 import MySidebar from './scenes/global/MySidebar';
-import Clients from './scenes/clients';
-import AddNewClient from './scenes/addClient';
-import Schedule from './scenes/schedule';
-import Login from './scenes/login';
-import Register from './scenes/register/Register';
-import { useState } from 'react';
+import Clients from './scenes/Clients';
+import AddNewClient from './scenes/AddClient';
+import Schedule from './scenes/Schedule';
+import Login from './scenes/auth/Login';
+import Register from './scenes/auth/Register';
 
 function App() {
 	const [theme, colorMode] = useMode();
-	const [isAuth, setIsAuth] = useState(false);
+	const [isAuth, setIsAuth] = useState(true);
 
 	return (
 		<ColorModeContext.Provider value={colorMode}>

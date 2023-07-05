@@ -1,30 +1,59 @@
 import React, { useState } from 'react';
 import { Box, IconButton, InputBase, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-
-import { tokens } from '../../theme';
-import Header from '../../components/Header';
-import { mockDataClients } from '../../data/mockData';
 import SearchIcon from '@mui/icons-material/Search';
-import Options from '../../components/options/Options';
+import { tokens } from '../../theme';
+import { mockDataClients } from '../../data/mockData';
+import { getStyledDataGrid } from './styleDataGrid';
+import Header from '../../components/Header';
+import Options from '../../components/Options';
+import EditClientPopup from '../../components/EditClientPopup';
 
 const Clients = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 
 	const [data, setData] = useState([...mockDataClients]);
+	const [isVisible, setIsVisible] = useState(false);
+	const [currentItem, setCurrentItem] = useState({
+		id: '',
+		firstName: '',
+		lastName: '',
+		surName: '',
+		phone: '',
+		instagram: '',
+		visits: 1,
+	});
 
 	const handleDelete = (id) => {
 		setData((prevData) => prevData.filter((row) => row.id !== id));
 	};
 
+	const handleEdit = (id) => {
+		const item = data.find((item) => item.id === id);
+		setCurrentItem({ ...currentItem, ...item });
+		setIsVisible(true);
+	};
+
 	const columns = [
 		{ field: 'id', headerName: 'ID', minWidth: 35, maxWidth: 40 },
 		{
-			field: 'name',
-			headerName: 'ФИО',
+			field: 'firstName',
+			headerName: 'Имя',
 			flex: 1,
-			minWidth: 120,
+			minWidth: 40,
+		},
+		{
+			field: 'lastName',
+			headerName: 'Фамилия',
+			flex: 1,
+			minWidth: 40,
+		},
+		{
+			field: 'surName',
+			headerName: 'Отчество',
+			flex: 1,
+			minWidth: 40,
 		},
 		{
 			field: 'instagram',
@@ -49,7 +78,12 @@ const Clients = () => {
 			headerName: '',
 			sortable: false,
 			width: 10,
-			renderCell: (params) => <Options delete={() => handleDelete(params.row.id)} />,
+			renderCell: (params) => (
+				<Options
+					removeItem={() => handleDelete(params.row.id)}
+					editItem={() => handleEdit(params.row.id)}
+				/>
+			),
 		},
 	];
 
@@ -64,58 +98,7 @@ const Clients = () => {
 				</IconButton>
 			</Box>
 
-			<Box
-				m='20px 0 0 0'
-				height='75vh'
-				paddingBottom={'20px'}
-				sx={{
-					'& .MuiDataGrid-root': {
-						border: 'none',
-					},
-					'& .MuiDataGrid-cell': {
-						borderBottom: 'none',
-					},
-					'& .name-column--cell': {
-						color: colors.greenAccent[300],
-					},
-					'& .MuiDataGrid-columnHeaders': {
-						backgroundColor: colors.blueAccent[700],
-						borderBottom: 'none',
-					},
-					'& .MuiDataGrid-virtualScroller': {
-						backgroundColor: colors.primary[400],
-					},
-					'& .MuiDataGrid-footerContainer': {
-						borderTop: 'none',
-						backgroundColor: colors.blueAccent[700],
-					},
-					'& .MuiCheckbox-root': {
-						color: `${colors.greenAccent[200]} !important`,
-					},
-					'& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-						color: `${colors.grey[100]} !important`,
-					},
-					'& .MuiDataGrid-columnHeaderTitle': {
-						fontSize: '15px',
-					},
-					'& .MuiDataGrid-cellContent': {
-						fontSize: '13px',
-					},
-					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
-						width: '0.4em',
-						height: '0.4em',
-					},
-					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track': {
-						background: colors.grey[700],
-					},
-					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
-						backgroundColor: colors.blueAccent[500],
-					},
-					'& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
-						background: '#555',
-					},
-				}}
-			>
+			<Box m='20px 0 0 0' height='75vh' paddingBottom={'20px'} sx={getStyledDataGrid(colors)}>
 				<DataGrid
 					rows={data}
 					columns={columns}
@@ -124,6 +107,9 @@ const Clients = () => {
 					hideFooter={true}
 				/>
 			</Box>
+			{isVisible && (
+				<EditClientPopup initialValues={currentItem} setIsVisible={setIsVisible} />
+			)}
 		</Box>
 	);
 };

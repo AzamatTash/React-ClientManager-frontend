@@ -25,7 +25,7 @@ const AuthField = ({
 			<InputLabel
 				name={name}
 				sx={{
-					marginBottom: isMobileS ? '5px' : '20px',
+					marginBottom: '10px',
 				}}
 			>
 				{inputLable}
@@ -42,7 +42,7 @@ const AuthField = ({
 				error={!!touched[name] && !!errors[name]}
 				helperText={touched[name] && errors[name]}
 				sx={{
-					marginBottom: isMobileS ? '5px' : '20px',
+					marginBottom: '20px',
 				}}
 				InputProps={{
 					endAdornment: isPasswordField && (

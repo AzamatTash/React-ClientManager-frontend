@@ -12,30 +12,13 @@ import {
 	ListItemText,
 	TextField,
 	useTheme,
-	rgbToHex,
 	alpha,
 } from '@mui/material';
-import { tokens } from '../../theme';
-import { getDate } from '../../utils/getDate';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	setTitleData,
-	setTimeData,
-	setCommentData,
-	setPriceData,
-	setAllData,
-	setStatusData
-} from '../../redux/slices/eventSlice';
-import TimeField from '../../components/customFields/TimeField';
-import ClientsField from '../../components/customFields/ClientsField';
-import { Formik } from 'formik';
-import { GetCheckoutSchema } from '../../utils/getCheckoutSchema';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
@@ -43,7 +26,31 @@ import TitleOutlinedIcon from '@mui/icons-material/TitleOutlined';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 
-const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMode, handleSaveEvent }) => {
+import { Formik } from 'formik';
+import {
+	setTitleData,
+	setTimeData,
+	setCommentData,
+	setPriceData,
+	setAllData,
+	setStatusData,
+} from '../../redux/slices/eventSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+import TimeField from '../../components/customFields/TimeField';
+import ClientsField from '../../components/customFields/ClientsField';
+import { CheckoutSchema } from '../../utils/getCheckoutSchema';
+import { tokens } from '../../theme';
+import { getDate } from '../../utils/getDate';
+
+const SidebarForEvent = ({
+	isActive,
+	readMode,
+	moreInfo,
+	setIsActive,
+	setReadMode,
+	handleSaveEvent,
+}) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const names = [
@@ -64,29 +71,35 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 	const { events } = useSelector((state) => state.events);
 
 	const onClickEdit = (id) => {
-		setReadMode(false)
-		const curentEvent = events.filter(event => event.id === id)
-		dispatch(setAllData(curentEvent))
-	}
+		setReadMode(false);
+		const curentEvent = events.filter((event) => event.id === id);
+		dispatch(setAllData(curentEvent));
+	};
 
 	const handleChange = (event) => {
-		dispatch(setStatusData({
-			id: moreInfo.status,
-			status: event.target.checked
-		}))
-	  };
+		dispatch(
+			setStatusData({
+				id: moreInfo.status,
+				status: event.target.checked,
+			})
+		);
+	};
 
 	return (
 		<Box
-			sx={isActive ? {
-				display: 'block',
-				position: 'absolute',
-				top: 0,
-				left:0,
-				width: '100%',
-				height: '100%',
-				backgroundColor: alpha(colors.primary[100], 0.25),
-			}: {}}
+			sx={
+				isActive
+					? {
+							display: 'block',
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100%',
+							backgroundColor: alpha(colors.primary[100], 0.25),
+					  }
+					: {}
+			}
 			onClick={() => setIsActive(false)}
 		>
 			<Box
@@ -185,24 +198,30 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 							</ListItem>
 							<Divider variant='inset' component='li' />
 							<ListItem>
-								<FormControlLabel control={<Switch sx={{
-									'& .MuiSwitch-switchBase.Mui-checked': {
-										color: theme.palette.secondary.main,
+								<FormControlLabel
+									control={
+										<Switch
+											sx={{
+												'& .MuiSwitch-switchBase.Mui-checked': {
+													color: theme.palette.secondary.main,
+												},
+											}}
+										/>
 									}
-								}}/>} 
-								defaultChecked={moreInfo.status} 
-								label={moreInfo.status ? 'Выполнено' : "Не выполнено" }
-								onChange={handleChange}
+									defaultChecked={moreInfo.status}
+									label={moreInfo.status ? 'Выполнено' : 'Не выполнено'}
+									onChange={handleChange}
 								/>
 							</ListItem>
 						</List>
-						<Button fullWidth 
-							type='submit' 
-							color='secondary' 
+						<Button
+							fullWidth
+							type='submit'
+							color='secondary'
 							variant='contained'
 							onClick={() => onClickEdit(moreInfo.id)}
 							disabled={moreInfo.status}
-							>
+						>
 							Редактировать
 						</Button>
 					</>
@@ -211,7 +230,7 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 						enableReinitialize={true}
 						onSubmit={handleSaveEvent}
 						initialValues={eventValue}
-						validationSchema={GetCheckoutSchema().forEvent()}
+						validationSchema={CheckoutSchema.event()}
 					>
 						{({ errors, touched, handleBlur, handleSubmit }) => (
 							<form onSubmit={handleSubmit}>
@@ -222,7 +241,9 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 									label='Добавить название'
 									name='title'
 									value={eventValue.title}
-									onChange={(e) => dispatch(setTitleData({ title: e.target.value }))}
+									onChange={(e) =>
+										dispatch(setTitleData({ title: e.target.value }))
+									}
 									onBlur={handleBlur}
 									error={!!touched.title && !!errors.title}
 									helperText={touched.title && errors.title}
@@ -263,7 +284,9 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 											type='text'
 											value={eventValue.time}
 											onBlur={handleBlur}
-											onChange={(value) => dispatch(setTimeData({ time: value }))}
+											onChange={(value) =>
+												dispatch(setTimeData({ time: value }))
+											}
 											error={!!touched.time && !!errors.time}
 											helperText={touched.time && errors.time}
 										/>
@@ -304,7 +327,9 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 									name='price'
 									error={!!touched.price && !!errors.price}
 								>
-									<InputLabel htmlFor='outlined-adornment-amount'>Цена</InputLabel>
+									<InputLabel htmlFor='outlined-adornment-amount'>
+										Цена
+									</InputLabel>
 									<OutlinedInput
 										id='outlined-adornment-amount'
 										endAdornment={<CurrencyRubleIcon />}
@@ -320,10 +345,17 @@ const SidebarForEvent = ({ isActive, readMode, moreInfo, setIsActive, setReadMod
 											)
 										}
 									/>
-									{errors.price && <FormHelperText>{errors.price}</FormHelperText>}
+									{errors.price && (
+										<FormHelperText>{errors.price}</FormHelperText>
+									)}
 								</FormControl>
 
-								<Button fullWidth type='submit' color='secondary' variant='contained'>
+								<Button
+									fullWidth
+									type='submit'
+									color='secondary'
+									variant='contained'
+								>
 									Сохранить
 								</Button>
 							</form>
