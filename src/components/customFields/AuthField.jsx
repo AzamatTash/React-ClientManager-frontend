@@ -13,6 +13,7 @@ const AuthField = ({
 	values,
 	touched,
 	errors,
+	statusFetching,
 	handleBlur,
 	handleChange,
 	isPasswordField,
@@ -39,7 +40,7 @@ const AuthField = ({
 				onChange={handleChange}
 				value={values[name]}
 				name={name}
-				error={!!touched[name] && !!errors[name]}
+				error={(!!touched[name] && !!errors[name]) || statusFetching === 'error'}
 				helperText={touched[name] && errors[name]}
 				sx={{
 					marginBottom: '20px',

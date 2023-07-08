@@ -2,17 +2,11 @@ import React from 'react';
 import { Box, alpha, useMediaQuery, useTheme } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { tokens } from '../theme';
-import ClientsForm from '../components/ClientsForm';
 
-const EditClientPopup = ({ initialValues, setIsVisible }) => {
+const BasePopup = ({ children, setIsVisible }) => {
 	const isNonMobile = useMediaQuery('(min-width:600px)');
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-
-	const handleFormSubmit = (values) => {
-		console.log(values);
-		setIsVisible(false);
-	};
 
 	return (
 		<Box
@@ -44,17 +38,10 @@ const EditClientPopup = ({ initialValues, setIsVisible }) => {
 				}}
 				onClick={(e) => e.stopPropagation()}
 			>
-				<ClientsForm
-					isNonMobile={isNonMobile}
-					handleFormSubmit={handleFormSubmit}
-					initialValues={initialValues}
-					textBtn='Сохранить'
-					isPopup
-					setIsVisible={setIsVisible}
-				/>
+				{children}
 			</Paper>
 		</Box>
 	);
 };
 
-export default EditClientPopup;
+export default BasePopup;

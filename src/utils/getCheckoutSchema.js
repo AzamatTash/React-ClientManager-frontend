@@ -21,7 +21,7 @@ export class CheckoutSchema {
 			lastName: yup.string().required('обязательное поле'),
 			surName: yup.string(),
 			instagram: yup.string(),
-			phone: yup
+			phoneNumber: yup
 				.string()
 				.min(11, 'номер телефона недействителен!')
 				.max(21, 'номер телефона недействителен!')
@@ -40,7 +40,7 @@ export class CheckoutSchema {
 
 	static register() {
 		return yup.object().shape({
-			name: yup
+			firstName: yup
 				.string()
 				.min(3, 'имя слишком короткое')
 				.max(12, 'имя слишком длиное')

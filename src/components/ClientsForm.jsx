@@ -9,6 +9,7 @@ const ClientsForm = ({
 	initialValues,
 	isNonMobile,
 	textBtn,
+	disabledBtn,
 	isPopup,
 	setIsVisible,
 }) => {
@@ -88,10 +89,10 @@ const ClientsForm = ({
 							label='Телефон'
 							onBlur={handleBlur}
 							onChange={handleChange}
-							value={values.phone}
-							name='phone'
-							error={!!touched.phone && !!errors.phone}
-							helperText={touched.phone && errors.phone}
+							value={values.phoneNumber}
+							name='phoneNumber'
+							error={!!touched.phoneNumber && !!errors.phoneNumber}
+							helperText={touched.phoneNumber && errors.phoneNumber}
 							sx={{ gridColumn: 'span 2' }}
 						/>
 						<TextField
@@ -117,6 +118,7 @@ const ClientsForm = ({
 							type='submit'
 							color='secondary'
 							variant='contained'
+							disabled={disabledBtn}
 							sx={{
 								marginBottom: isMobile ? '20px' : '0px',
 								minWidth: isMobile ? '100%' : '95px',

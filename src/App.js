@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes, Navigate } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAuthMe } from './redux/slices/authMeSlice';
 import Topbar from './scenes/global/Topbar';
 import Main from './scenes/main';
 import MySidebar from './scenes/global/MySidebar';
@@ -14,14 +15,21 @@ import Register from './scenes/auth/Register';
 
 function App() {
 	const [theme, colorMode] = useMode();
-	const [isAuth, setIsAuth] = useState(false);
+	const dispatch = useDispatch();
+	const { status, isAuth } = useSelector((state) => state.authMe);
+
+	useEffect(() => {
+		dispatch(fetchAuthMe());
+	}, []);
 
 	return (
 		<ColorModeContext.Provider value={colorMode}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<div className={'app'}>
-					{isAuth ? (
+					{status === 'loading' ? (
+						'идет загрузка'
+					) : isAuth ? (
 						<>
 							<MySidebar />
 							<main className='content'>
@@ -39,10 +47,7 @@ function App() {
 						<>
 							<main className='content'>
 								<Routes>
-									<Route
-										path={'/login'}
-										element={<Login setIsAuth={setIsAuth} />}
-									/>
+									<Route path={'/login'} element={<Login />} />
 									<Route path={'/register'} element={<Register />} />
 									<Route path='*' element={<Navigate to='/login' />} />
 								</Routes>
