@@ -5,22 +5,33 @@ import Typography from '@mui/material/Typography';
 import LineGraph from '../../components/LineGraph';
 import BarGraph from '../../components/BarGraph';
 import ActiveShapePieChart from '../../components/ActiveShapePieChart';
-
-const data1 = [
-	{ name: 'Выполнено', value: 20 },
-	{ name: 'Не выполнено', value: 11 },
-];
-
-const data2 = [
-	{ name: 'Alina', value: 3 },
-	{ name: 'Madina', value: 4 },
-	{ name: 'Eleanora', value: 2 },
-	{ name: 'Svetlana', value: 6 },
-	{ name: 'Mariya', value: 5 },
-];
+import { useFetching } from '../../hooks/useFetching';
+import Api from '../../service';
+import { useEffect } from 'react';
+import { useTopClient } from '../../hooks/useTopClient';
+import { useStatusEvents } from '../../hooks/useStatusEvents';
+import { useProfit } from '../../hooks/useProfit';
 
 const Main = () => {
 	const isNonMobile = useMediaQuery('(min-width:934px)');
+
+	const clientsRequest = useFetching(async () => {
+		return await Api.getClients();
+	});
+	const topClientsData = useTopClient(clientsRequest.data);
+
+	const eventsRequest = useFetching(async () => {
+		return await Api.getEvents();
+	});
+	const statusEvents = useStatusEvents(eventsRequest.data);
+
+	const profitMoney = useProfit(eventsRequest.data, 'money');
+	const profitVisits = useProfit(eventsRequest.data, 'visits');
+
+	useEffect(() => {
+		clientsRequest.fetching();
+		eventsRequest.fetching();
+	}, []);
 
 	return (
 		<Box m={'0px 20px'} maxHeight={'100vh'}>
@@ -48,7 +59,7 @@ const Main = () => {
 						<Typography variant={isNonMobile ? 'h4' : 'h5'} align={'center'}>
 							Статус записей
 						</Typography>
-						<ActiveShapePieChart data={data1} rate={true} text='записей' />
+						<ActiveShapePieChart data={statusEvents} rate={true} text='записей' />
 					</Box>
 					<Box
 						sx={{
@@ -60,7 +71,7 @@ const Main = () => {
 							Топ 5 клиентов по посищению
 						</Typography>
 						<ActiveShapePieChart
-							data={data2}
+							data={topClientsData}
 							rate={false}
 							text={isNonMobile ? 'посищений' : ''}
 						/>
@@ -85,7 +96,7 @@ const Main = () => {
 						height: isNonMobile ? '40vh' : '270px',
 					}}
 				>
-					<LineGraph />
+					<LineGraph data={profitMoney} />
 				</Box>
 				<Box
 					sx={{
@@ -93,7 +104,7 @@ const Main = () => {
 						height: isNonMobile ? '40vh' : '270px',
 					}}
 				>
-					<BarGraph />
+					<BarGraph data={profitVisits} />
 				</Box>
 			</Box>
 		</Box>

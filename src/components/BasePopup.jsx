@@ -16,7 +16,7 @@ const BasePopup = ({ children, setIsVisible }) => {
 				bottom: 0,
 				left: 0,
 				right: 0,
-				zIndex: 1,
+				zIndex: 1202,
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',

@@ -9,18 +9,21 @@ import AuthField from '../../components/customFields/AuthField';
 import AuthWrapper from './AuthWrapper';
 import AuthHeader from './AuthHeader';
 import AlertInfo from '../../components/AlertInfo';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const theme = useTheme();
 	const dispatch = useDispatch();
 	const { status, errorMessage } = useSelector((state) => state.login);
 	const [isVisibleError, setIsVisibleError] = useState();
+	const navigate = useNavigate();
 
 	const handleFormSubmit = async (values) => {
 		setIsVisibleError(true);
 		const { payload } = await dispatch(fetchLogin(values));
 		if ('token' in payload) {
 			window.localStorage.setItem('token', payload.token);
+			navigate('/');
 			dispatch(setIsAuth());
 		}
 		setTimeout(() => {

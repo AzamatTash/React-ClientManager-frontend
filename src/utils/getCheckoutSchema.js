@@ -10,7 +10,7 @@ export class CheckoutSchema {
 				.max(20, 'название не более 20 символов')
 				.required('обязательное поле'),
 			time: yup.string().required('обязательное поле'),
-			clients: yup.string().required('обязательное поле'),
+			client: yup.string().required('обязательное поле'),
 			price: yup.string().required('обязательное поле'),
 		});
 	}

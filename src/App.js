@@ -12,6 +12,7 @@ import AddNewClient from './scenes/addClient';
 import Schedule from './scenes/schedule';
 import Login from './scenes/auth/Login';
 import Register from './scenes/auth/Register';
+import ErrorPage from './scenes/errorPage';
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -28,18 +29,19 @@ function App() {
 				<CssBaseline />
 				<div className={'app'}>
 					{status === 'loading' ? (
-						'идет загрузка'
+						<main className='content'></main>
 					) : isAuth ? (
 						<>
 							<MySidebar />
 							<main className='content'>
 								<Topbar />
 								<Routes>
+									<Route index element={<Main />} />
 									<Route path={'/'} element={<Main />} />
 									<Route path={'/schedule'} element={<Schedule />} />
 									<Route path={'/clients'} element={<Clients />} />
 									<Route path={'/add_client'} element={<AddNewClient />} />
-									<Route path='*' element={<Navigate to='/' />} />
+									<Route path='*' element={<ErrorPage />} />
 								</Routes>
 							</main>
 						</>

@@ -25,70 +25,78 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import TitleOutlinedIcon from '@mui/icons-material/TitleOutlined';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-
 import { Formik } from 'formik';
 import {
 	setTitleData,
 	setTimeData,
 	setCommentData,
 	setPriceData,
-	setAllData,
-	setStatusData,
+	fetchUpdateEvent,
+	fetchRemoveEvent,
 } from '../../redux/slices/eventSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
 import TimeField from '../../components/customFields/TimeField';
 import ClientsField from '../../components/customFields/ClientsField';
 import { CheckoutSchema } from '../../utils/getCheckoutSchema';
 import { tokens } from '../../theme';
 import { getDate } from '../../utils/getDate';
+import { useEffect } from 'react';
+import { fetchGetClients } from '../../redux/slices/clientSlice';
 
 const SidebarForEvent = ({
-	isActive,
+	createMode,
 	readMode,
-	moreInfo,
-	setIsActive,
+	setCreateMode,
 	setReadMode,
 	handleSaveEvent,
+	setIsVisibleAlert,
+	setAlertData,
 }) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-	const names = [
-		'Oliver Hansen',
-		'Van Henry',
-		'April Tucker',
-		'Ralph Hubbard',
-		'Omar Alexander',
-		'Carlos Abbott',
-		'Miriam Wagner',
-		'Bradley Wilkerson',
-		'Virginia Andrews',
-		'Kelly Snyder',
-	];
 
 	const dispatch = useDispatch();
-	const eventValue = useSelector((state) => state.event);
-	const { events } = useSelector((state) => state.events);
+	const { event, status } = useSelector((state) => state.event);
+	const { data } = useSelector((state) => state.client);
 
-	const onClickEdit = (id) => {
+	const handleEditEvent = () => {
 		setReadMode(false);
-		const curentEvent = events.filter((event) => event.id === id);
-		dispatch(setAllData(curentEvent));
+		setCreateMode(true);
 	};
 
-	const handleChange = (event) => {
+	const handleDeleteEvent = async () => {
+		const { payload } = await dispatch(fetchRemoveEvent(event.id));
+		if (payload.message) {
+			setAlertData({
+				type: 'success',
+				message: payload.message,
+			});
+			setIsVisibleAlert(true);
+		}
+		setTimeout(() => {
+			setIsVisibleAlert(false);
+		}, 2000);
+		setReadMode(false);
+		setCreateMode(false);
+	};
+
+	const handleChangeStatus = (e) => {
 		dispatch(
-			setStatusData({
-				id: moreInfo.status,
-				status: event.target.checked,
+			fetchUpdateEvent({
+				...event,
+				status: e.target.checked,
 			})
 		);
 	};
 
+	useEffect(() => {
+		dispatch(fetchGetClients());
+	}, []);
+
 	return (
 		<Box
 			sx={
-				isActive
+				createMode
 					? {
 							display: 'block',
 							position: 'absolute',
@@ -100,11 +108,13 @@ const SidebarForEvent = ({
 					  }
 					: {}
 			}
-			onClick={() => setIsActive(false)}
+			onClick={() => {
+				setCreateMode(false);
+			}}
 		>
 			<Box
-				p={'10px 20px'}
 				sx={{
+					padding: '10px 20px 20px',
 					width: '320px',
 					position: 'fixed',
 					top: 0,
@@ -112,14 +122,16 @@ const SidebarForEvent = ({
 					zIndex: 1000,
 					height: '100%',
 					backgroundColor: colors.primary[400],
-					transform: isActive ? 'translateX(-320px)' : 'translateX(0px)',
+					transform: createMode ? 'translateX(-320px)' : 'translateX(0px)',
 					transition:
 						'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0s, opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0s',
 					'& .MuiFormHelperText-root': { marginRight: '0px', textAlign: 'right' },
+					overflow: 'hidden',
+					overflowY: 'auto',
 				}}
 				onClick={(e) => e.stopPropagation()}
 			>
-				<IconButton onClick={() => setIsActive(!isActive)}>
+				<IconButton onClick={() => setCreateMode(!createMode)}>
 					<CloseOutlinedIcon />
 				</IconButton>
 
@@ -155,7 +167,12 @@ const SidebarForEvent = ({
 										<TitleOutlinedIcon />
 									</Avatar>
 								</ListItemAvatar>
-								<ListItemText primary='Название' secondary={moreInfo.title} />
+								<ListItemText
+									primary='Название'
+									secondary={
+										status === 'loading' ? 'загружаем данные...' : event.title
+									}
+								/>
 							</ListItem>
 							<Divider variant='inset' component='li' />
 							<ListItem>
@@ -166,7 +183,11 @@ const SidebarForEvent = ({
 								</ListItemAvatar>
 								<ListItemText
 									primary='Дата и время'
-									secondary={getDate(moreInfo.start) + ' ' + moreInfo.time}
+									secondary={
+										status === 'loading'
+											? 'загружаем данные...'
+											: getDate(event.start) + ' ' + event.time
+									}
 								/>
 							</ListItem>
 							<Divider variant='inset' component='li' />
@@ -176,7 +197,12 @@ const SidebarForEvent = ({
 										<PermIdentityOutlinedIcon />
 									</Avatar>
 								</ListItemAvatar>
-								<ListItemText primary='Клиент' secondary={moreInfo.clients} />
+								<ListItemText
+									primary='Клиент'
+									secondary={
+										status === 'loading' ? 'загружаем данные...' : event.client
+									}
+								/>
 							</ListItem>
 							<Divider variant='inset' component='li' />
 							<ListItem>
@@ -185,7 +211,12 @@ const SidebarForEvent = ({
 										<MessageOutlinedIcon />
 									</Avatar>
 								</ListItemAvatar>
-								<ListItemText primary='Комметарий' secondary={moreInfo.comment} />
+								<ListItemText
+									primary='Комметарий'
+									secondary={
+										status === 'loading' ? 'загружаем данные...' : event.comment
+									}
+								/>
 							</ListItem>
 							<Divider variant='inset' component='li' />
 							<ListItem>
@@ -194,7 +225,12 @@ const SidebarForEvent = ({
 										<CurrencyRubleIcon />
 									</Avatar>
 								</ListItemAvatar>
-								<ListItemText primary='Цена' secondary={moreInfo.price} />
+								<ListItemText
+									primary='Цена'
+									secondary={
+										status === 'loading' ? 'загружаем данные...' : event.price
+									}
+								/>
 							</ListItem>
 							<Divider variant='inset' component='li' />
 							<ListItem>
@@ -208,9 +244,15 @@ const SidebarForEvent = ({
 											}}
 										/>
 									}
-									defaultChecked={moreInfo.status}
-									label={moreInfo.status ? 'Выполнено' : 'Не выполнено'}
-									onChange={handleChange}
+									label={
+										status === 'loading'
+											? 'обнавляем статус...'
+											: event.status
+											? 'Выполнено'
+											: 'Не выполнено'
+									}
+									checked={event.status}
+									onChange={handleChangeStatus}
 								/>
 							</ListItem>
 						</List>
@@ -219,17 +261,28 @@ const SidebarForEvent = ({
 							type='submit'
 							color='secondary'
 							variant='contained'
-							onClick={() => onClickEdit(moreInfo.id)}
-							disabled={moreInfo.status}
+							onClick={handleEditEvent}
+							sx={{
+								marginBottom: '20px',
+							}}
 						>
-							Редактировать
+							редактировать
+						</Button>
+						<Button
+							fullWidth
+							type='submit'
+							color='secondary'
+							variant='contained'
+							onClick={handleDeleteEvent}
+						>
+							удалить
 						</Button>
 					</>
 				) : (
 					<Formik
 						enableReinitialize={true}
 						onSubmit={handleSaveEvent}
-						initialValues={eventValue}
+						initialValues={event}
 						validationSchema={CheckoutSchema.event()}
 					>
 						{({ errors, touched, handleBlur, handleSubmit }) => (
@@ -240,7 +293,7 @@ const SidebarForEvent = ({
 									type='text'
 									label='Добавить название'
 									name='title'
-									value={eventValue.title}
+									value={event?.title}
 									onChange={(e) =>
 										dispatch(setTitleData({ title: e.target.value }))
 									}
@@ -267,7 +320,7 @@ const SidebarForEvent = ({
 									>
 										<AccessTimeOutlinedIcon sx={{ marginRight: '10px' }} />
 										<Typography variant={'h6'}>
-											{getDate(eventValue.start)}
+											{getDate(event.start)}
 										</Typography>
 									</Box>
 									<Box
@@ -282,7 +335,7 @@ const SidebarForEvent = ({
 											label='время'
 											name='time'
 											type='text'
-											value={eventValue.time}
+											value={event.time}
 											onBlur={handleBlur}
 											onChange={(value) =>
 												dispatch(setTimeData({ time: value }))
@@ -295,11 +348,18 @@ const SidebarForEvent = ({
 
 								{/*Customer selection field*/}
 								<ClientsField
-									name='clients'
-									value={eventValue.clients}
-									clients={names}
-									error={!!errors.clients}
-									helperText={errors.clients}
+									name='client'
+									value={event.client}
+									clients={
+										data
+											? data.map((item) => ({
+													id: item.id,
+													name: `${item.firstName} ${item.lastName}`,
+											  }))
+											: []
+									}
+									error={!!touched.client && !!errors.client}
+									helperText={errors.client}
 								/>
 
 								{/*Field for comment*/}
@@ -314,7 +374,7 @@ const SidebarForEvent = ({
 									label='Комментарий'
 									multiline
 									rows={4}
-									value={eventValue.comment}
+									value={event.comment}
 									onChange={(e) =>
 										dispatch(setCommentData({ comment: e.target.value }))
 									}
@@ -335,7 +395,7 @@ const SidebarForEvent = ({
 										endAdornment={<CurrencyRubleIcon />}
 										label='price'
 										sx={{ fontSize: '16px' }}
-										value={eventValue.price}
+										value={event.price}
 										onBlur={handleBlur}
 										onChange={(e) =>
 											dispatch(
@@ -355,6 +415,7 @@ const SidebarForEvent = ({
 									type='submit'
 									color='secondary'
 									variant='contained'
+									disabled={status === 'loading'}
 								>
 									Сохранить
 								</Button>

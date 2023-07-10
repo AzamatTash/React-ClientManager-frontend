@@ -52,7 +52,7 @@ const AddNewClient = () => {
 	};
 
 	return (
-		<Box m={'0px 20px'} minHeight={'100vh'} marginBottom={'20px'} position='relative'>
+		<Box m={'0px 20px'} maxHeight={'100vh'} marginBottom={'20px'} position='relative'>
 			{alertData.isVisible && (
 				<AlertInfo
 					isVisible={alertData.isVisible}

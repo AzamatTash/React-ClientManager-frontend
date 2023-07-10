@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 
 const TimeField = (props) => {
-	const [value, setValue] = useState(props.value || '');
+	const [value, setValue] = useState('');
 
 	const handleChange = (event) => {
 		const { value } = event.target;
@@ -19,6 +19,10 @@ const TimeField = (props) => {
 		setValue(formattedValue);
 		props.onChange && props.onChange(formattedValue);
 	};
+
+	useEffect(() => {
+		setValue(props.value);
+	}, [props]);
 
 	return (
 		<TextField

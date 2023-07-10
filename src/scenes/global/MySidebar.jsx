@@ -45,7 +45,6 @@ const MySidebar = () => {
 		'/schedule': 'Расписание',
 		'/clients': 'Клиенты',
 		'/add_clients': 'Добавление',
-		'/settings': 'Настройки',
 	};
 	const [selected, setSelected] = useState(pathList[pathname]);
 
@@ -168,14 +167,6 @@ const MySidebar = () => {
 							title='Добавление'
 							to='/add_client'
 							icon={<PersonAddAltIcon />}
-							selected={selected}
-							setSelected={setSelected}
-							toggleSidebar={toggleSidebar}
-						/>
-						<Item
-							title='Настройки'
-							to='/settings'
-							icon={<SettingsOutlinedIcon />}
 							selected={selected}
 							setSelected={setSelected}
 							toggleSidebar={toggleSidebar}

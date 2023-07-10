@@ -10,7 +10,9 @@ const AlertInfo = ({ isVisible, type, message, positionY }) => {
 				minWidth: '88%',
 				top: '20px',
 				left: '50%',
-				transform: isVisible ? `translate(-50%, ${positionY}px)` : 'translate(-50%, -85px)',
+				transform: isVisible
+					? `translate(-50%, ${positionY}px)`
+					: 'translate(-50%, -130px)',
 				zIndex: 1100,
 				transition:
 					'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0s, opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0s',

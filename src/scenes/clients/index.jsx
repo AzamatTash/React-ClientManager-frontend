@@ -3,7 +3,6 @@ import { Box, IconButton, InputBase, useTheme, useMediaQuery } from '@mui/materi
 import { DataGrid } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { tokens } from '../../theme';
-import { mockDataClients } from '../../data/mockData';
 import { getStyledDataGrid } from './styleDataGrid';
 import Header from '../../components/Header';
 import Options from '../../components/Options';
@@ -11,44 +10,87 @@ import BasePopup from '../../components/BasePopup';
 import ClientsForm from '../../components/ClientsForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchGetClients } from '../../redux/slices/clientSlice';
+import {
+	fetchGetClient,
+	fetchGetClients,
+	fetchRemoveClient,
+	fetchUpdateClient,
+} from '../../redux/slices/clientSlice';
+import AlertInfo from '../../components/AlertInfo';
 
 const Clients = () => {
 	const isNonMobile = useMediaQuery('(min-width:600px)');
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-	const dispatch = useDispatch();
-	const { data, status } = useSelector((state) => state.client);
 
-	const [isVisible, setIsVisible] = useState(false);
-	const [currentItem, setCurrentItem] = useState({
-		id: '',
-		firstName: '',
-		lastName: '',
-		surName: '',
-		phone: '',
-		instagram: '',
-		visits: 1,
+	const [alertData, setAlertData] = useState({
+		type: 'info',
+		message: '',
 	});
+	const [isVisibleAlert, setIsVisibleAlert] = useState(false);
 
-	const handleDelete = (id) => {
-		// setData((prevData) => prevData.filter((row) => row.id !== id));
+	const dispatch = useDispatch();
+	const { data, status, errorMessage } = useSelector((state) => state.client);
+
+	const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+
+	const handleDeleteClient = async (id) => {
+		const { payload } = await dispatch(fetchRemoveClient(id));
+		if (payload.message) {
+			setAlertData({
+				type: 'success',
+				message: payload.message,
+			});
+			setIsVisibleAlert(true);
+		}
+		setTimeout(() => {
+			setIsVisibleAlert(false);
+		}, 2000);
 	};
 
-	const handleEdit = (id) => {
-		// const item = data.find((item) => item.id === id);
-		// setCurrentItem({ ...currentItem, ...item });
-		// setIsVisible(true);
+	const handleEdit = async (id) => {
+		const { payload } = await dispatch(fetchGetClient(id));
+		if (payload.id) {
+			setIsVisiblePopup(true);
+		} else {
+			setAlertData({
+				type: 'error',
+				message: payload.message,
+			});
+			setIsVisibleAlert(true);
+			setTimeout(() => {
+				setIsVisibleAlert(false);
+			}, 2000);
+		}
 	};
 
-	const handleFormSubmit = (values) => {
-		console.log(values);
-		setIsVisible(false);
+	const handleSaveClient = async (values) => {
+		const { payload } = await dispatch(fetchUpdateClient({ id: data.id, ...values }));
+		if (payload.id) {
+			setAlertData({
+				type: 'success',
+				message: 'Изменения сохранены',
+			});
+			setIsVisibleAlert(true);
+			setTimeout(() => {
+				setIsVisibleAlert(false);
+			}, 2000);
+		} else {
+			setAlertData({
+				type: 'error',
+				message: errorMessage,
+			});
+			setIsVisibleAlert(true);
+			setTimeout(() => {
+				setIsVisibleAlert(false);
+			}, 2000);
+		}
+		setIsVisiblePopup(false);
 	};
 
 	useEffect(() => {
 		dispatch(fetchGetClients());
-	}, []);
+	}, [isVisibleAlert]);
 
 	const columns = [
 		{
@@ -103,7 +145,7 @@ const Clients = () => {
 			width: 10,
 			renderCell: (params) => (
 				<Options
-					removeItem={() => handleDelete(params.row.id)}
+					removeItem={() => handleDeleteClient(params.row.id)}
 					editItem={() => handleEdit(params.row.id)}
 				/>
 			),
@@ -111,7 +153,13 @@ const Clients = () => {
 	];
 
 	return (
-		<Box m={'0px 20px'} maxHeight={'100vh'}>
+		<Box m={'0px 20px'} maxHeight={'100vh'} position='relative'>
+			<AlertInfo
+				isVisible={isVisibleAlert}
+				type={alertData.type}
+				message={alertData.message}
+				positionY='-53'
+			/>
 			<Header title='Клиенты' />
 
 			<Box display={'flex'} backgroundColor={colors.primary[400]} borderRadius={'3px'}>
@@ -131,15 +179,15 @@ const Clients = () => {
 					loading={status === 'loading'}
 				/>
 			</Box>
-			{isVisible && (
-				<BasePopup setIsVisible={setIsVisible}>
+			{isVisiblePopup && (
+				<BasePopup setIsVisible={setIsVisiblePopup}>
 					<ClientsForm
 						isNonMobile={isNonMobile}
-						handleFormSubmit={handleFormSubmit}
-						initialValues={currentItem}
+						handleFormSubmit={handleSaveClient}
+						initialValues={data ? data : {}}
 						textBtn='Сохранить'
 						isPopup
-						setIsVisible={setIsVisible}
+						setIsVisible={setIsVisiblePopup}
 					/>
 				</BasePopup>
 			)}

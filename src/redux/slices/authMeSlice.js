@@ -19,7 +19,7 @@ export const fetchAuthMe = createAsyncThunk(
 
 const initialState = {
 	data: null,
-	isAuth: false,
+	isAuth: window.localStorage.getItem('token'),
 	status: 'error' | 'loading' | 'loaded',
 	errorMessage: null,
 };

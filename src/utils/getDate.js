@@ -1,4 +1,8 @@
 export const getDate = (str) => {
+	if (str === undefined) {
+		return '';
+	}
+
 	const date = new Date(str);
 
 	const weekdays = ['Вc', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];

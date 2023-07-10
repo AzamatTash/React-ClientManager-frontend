@@ -3,7 +3,7 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { setClientsData } from '../../redux/slices/eventSlice';
+import { setClientData } from '../../redux/slices/eventSlice';
 import { useDispatch } from 'react-redux';
 import { FormHelperText, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
@@ -27,7 +27,7 @@ const ClientsField = ({ error, helperText, value, clients, name }) => {
 	};
 	const handleChange = (event) => {
 		const value = event.target.value;
-		dispatch(setClientsData({ clients: value }));
+		dispatch(setClientData({ client: value }));
 	};
 
 	return (
@@ -44,11 +44,11 @@ const ClientsField = ({ error, helperText, value, clients, name }) => {
 			>
 				{clients.map((client) => (
 					<MenuItem
-						key={client}
-						value={client}
+						key={client.id}
+						value={client.name}
 						style={{ color: theme.palette.secondary.main }}
 					>
-						{client}
+						{client.name}
 					</MenuItem>
 				))}
 			</Select>
