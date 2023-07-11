@@ -8,7 +8,7 @@ import listPlugin from '@fullcalendar/list';
 import { Box, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
-import SidebarForEvents from '../global/SidebarForEvents';
+import EventSidebar from '../global/EventSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetEvents } from '../../redux/slices/eventsSlice';
 import {
@@ -23,7 +23,6 @@ import AlertInfo from '../../components/AlertInfo';
 const Schedule = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-
 	const [createMode, setCreateMode] = useState(false);
 	const [readMode, setReadMode] = useState(false);
 	const [isVisibleAlert, setIsVisibleAlert] = useState(false);
@@ -31,7 +30,6 @@ const Schedule = () => {
 		type: 'info',
 		message: '',
 	});
-
 	const dispatch = useDispatch();
 	const { event, errorMessage } = useSelector((state) => state.event);
 	const { events } = useSelector((state) => state.events);
@@ -168,7 +166,7 @@ const Schedule = () => {
 					events={events}
 				/>
 			</Box>
-			<SidebarForEvents
+			<EventSidebar
 				createMode={createMode}
 				readMode={readMode}
 				setCreateMode={setCreateMode}

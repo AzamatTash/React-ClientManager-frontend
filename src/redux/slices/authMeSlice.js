@@ -31,10 +31,8 @@ const authMeSlice = createSlice({
 		logout: (state) => {
 			state.data = null;
 			state.isAuth = false;
-			window.localStorage.removeItem('token');
-		},
-		setIsAuth: (state) => {
-			state.isAuth = true;
+			localStorage.removeItem('token');
+			localStorage.removeItem('theme');
 		},
 	},
 	extraReducers: (builder) => {
@@ -58,5 +56,5 @@ const authMeSlice = createSlice({
 	},
 });
 
-export const { logout, setIsAuth } = authMeSlice.actions;
+export const { logout } = authMeSlice.actions;
 export default authMeSlice.reducer;

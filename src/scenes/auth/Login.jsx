@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckoutSchema } from '../../utils/getCheckoutSchema';
 import { fetchLogin } from '../../redux/slices/loginSlice';
-import { setIsAuth } from '../../redux/slices/authMeSlice';
+import { fetchAuthMe } from '../../redux/slices/authMeSlice';
 import AuthField from '../../components/customFields/AuthField';
 import AuthWrapper from './AuthWrapper';
 import AuthHeader from './AuthHeader';
@@ -23,8 +23,8 @@ const Login = () => {
 		const { payload } = await dispatch(fetchLogin(values));
 		if ('token' in payload) {
 			window.localStorage.setItem('token', payload.token);
+			await dispatch(fetchAuthMe());
 			navigate('/');
-			dispatch(setIsAuth());
 		}
 		setTimeout(() => {
 			setIsVisibleError(false);
@@ -32,8 +32,8 @@ const Login = () => {
 	};
 
 	const initialValues = {
-		email: '',
-		password: '',
+		email: 'test98@mail.ru',
+		password: '4501',
 	};
 
 	return (

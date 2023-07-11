@@ -7,9 +7,9 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected, toggleSidebar }) => {
 	const theme = useTheme();
@@ -35,7 +35,7 @@ const Item = ({ title, to, icon, selected, setSelected, toggleSidebar }) => {
 	);
 };
 
-const MySidebar = () => {
+const MainSidebar = ({ data }) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
@@ -105,22 +105,22 @@ const MySidebar = () => {
 								alignItems='center'
 								sx={{
 									'& .avatar-image': {
-										backgroundColor: colors.primary[700],
 										objectFit: 'cover',
 									},
 								}}
 							>
-								<img
+								{/* <img
 									className='avatar-image'
 									alt='profile user'
-									width='100px'
-									height='100px'
+									width='50px'
+									height='50px'
 									src={
-										'https://img.freepik.com/free-photo/portrait-of-handsome-young-man-with-' +
-										'crossed-arms_176420-15569.jpg?w=1060&t=st=1676307525~exp=1676308125~hmac=1' +
-										'a81ec9f6bcb50b1806500b6cce6abd951b68639a75380ad7fbce870abf14dc6'
 									}
 									style={{ cursor: 'pointer', borderRadius: '50%' }}
+								/> */}
+								<AccountCircleOutlinedIcon
+									color='secondary'
+									sx={{ fontSize: 80 }}
 								/>
 							</Box>
 							<Box textAlign='center'>
@@ -128,9 +128,9 @@ const MySidebar = () => {
 									variant='h3'
 									color={colors.grey[100]}
 									fontWeight='bold'
-									sx={{ m: '10px 0 0 0' }}
+									sx={{ m: '20px 0 0 0' }}
 								>
-									Петр Ян
+									{data ? `${data?.firstName} ${data?.lastName}` : ''}
 								</Typography>
 								<Typography variant='h6' color={theme.palette.secondary.main}>
 									Администратор
@@ -178,4 +178,4 @@ const MySidebar = () => {
 	);
 };
 
-export default MySidebar;
+export default MainSidebar;

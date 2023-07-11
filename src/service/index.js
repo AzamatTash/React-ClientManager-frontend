@@ -3,7 +3,7 @@ import axios from 'axios';
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 	headers: {
-		authorization: window.localStorage.getItem('token'),
+		authorization: localStorage.getItem('token'),
 	},
 });
 
@@ -19,6 +19,11 @@ export default class Api {
 
 	static authMe() {
 		return instance.get('user/auth');
+	}
+
+	// User
+	static getUser() {
+		return instance.get('user/info');
 	}
 
 	// Clients

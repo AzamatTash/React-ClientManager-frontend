@@ -4,11 +4,12 @@ import { Formik } from 'formik';
 import { CheckoutSchema } from '../../utils/getCheckoutSchema';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRegister } from '../../redux/slices/registerSlice';
-import { setIsAuth } from '../../redux/slices/authMeSlice';
 import AuthField from '../../components/customFields/AuthField';
 import AuthWrapper from './AuthWrapper';
 import AuthHeader from './AuthHeader';
 import AlertInfo from '../../components/AlertInfo';
+import { fetchAuthMe } from '../../redux/slices/authMeSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 	const isNonMobile = useMediaQuery('(min-width:530px)');
@@ -17,13 +18,15 @@ const Register = () => {
 	const dispatch = useDispatch();
 	const { status, errorMessage } = useSelector((state) => state.register);
 	const [isVisibleError, setIsVisibleError] = useState();
+	const navigate = useNavigate();
 
 	const handleFormSubmit = async (values) => {
 		setIsVisibleError(true);
 		const { payload } = await dispatch(fetchRegister(values));
 		if ('token' in payload) {
 			window.localStorage.setItem('token', payload.token);
-			dispatch(setIsAuth());
+			await dispatch(fetchAuthMe());
+			navigate('/');
 		}
 		setTimeout(() => {
 			setIsVisibleError(false);

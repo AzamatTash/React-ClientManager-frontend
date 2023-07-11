@@ -127,7 +127,7 @@ const clientSlice = createSlice({
 				state.status = 'loading';
 				state.errorMessage = null;
 			})
-			.addCase(fetchRemoveClient.fulfilled, (state, action) => {
+			.addCase(fetchRemoveClient.fulfilled, (state) => {
 				state.status = 'loaded';
 				state.errorMessage = null;
 			})
@@ -139,7 +139,7 @@ const clientSlice = createSlice({
 				state.status = 'loading';
 				state.errorMessage = null;
 			})
-			.addCase(fetchUpdateClient.fulfilled, (state, action) => {
+			.addCase(fetchUpdateClient.fulfilled, (state) => {
 				state.status = 'loaded';
 				state.errorMessage = null;
 			})

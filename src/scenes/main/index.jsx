@@ -14,17 +14,14 @@ import { useProfit } from '../../hooks/useProfit';
 
 const Main = () => {
 	const isNonMobile = useMediaQuery('(min-width:934px)');
-
 	const clientsRequest = useFetching(async () => {
 		return await Api.getClients();
 	});
-	const topClientsData = useTopClient(clientsRequest.data);
-
 	const eventsRequest = useFetching(async () => {
 		return await Api.getEvents();
 	});
+	const topClientsData = useTopClient(clientsRequest.data);
 	const statusEvents = useStatusEvents(eventsRequest.data);
-
 	const profitMoney = useProfit(eventsRequest.data, 'money');
 	const profitVisits = useProfit(eventsRequest.data, 'visits');
 

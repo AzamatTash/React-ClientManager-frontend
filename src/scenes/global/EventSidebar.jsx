@@ -43,7 +43,7 @@ import { getDate } from '../../utils/getDate';
 import { useEffect } from 'react';
 import { fetchGetClients } from '../../redux/slices/clientSlice';
 
-const SidebarForEvent = ({
+const EventSidebar = ({
 	createMode,
 	readMode,
 	setCreateMode,
@@ -54,7 +54,6 @@ const SidebarForEvent = ({
 }) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-
 	const dispatch = useDispatch();
 	const { event, status } = useSelector((state) => state.event);
 	const { data } = useSelector((state) => state.client);
@@ -428,4 +427,4 @@ const SidebarForEvent = ({
 	);
 };
 
-export default SidebarForEvent;
+export default EventSidebar;

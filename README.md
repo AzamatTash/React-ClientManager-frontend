@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+<h1 align="center">React Client Manager</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ClientManager (Fullstack PERN)- это приложение, разработанное специально для самозанятых предпринимателей и профессионалов, которые предоставляют услуги клиентам. Оно предоставляет инструменты для эффективного учета и управления информацией о клиентах и их посещениях.
 
-## Available Scripts
+Основные функции и возможности приложения ClientManager включают:
 
-In the project directory, you can run:
+Учет клиентов: Вы можете создавать профили клиентов, включая основные данные, контактную информацию.
+Запись посещений: Зафиксируйте дату, время и детали каждого посещения клиента, включая оказанные услуги и ее стоимость.
+Календарное планирование: Используйте удобный календарь для планирования встреч с клиентами, просмотра и изменения расписания.
+Аналитика и отчетность: Приложение генерирует отчет о выполненных услугах, посещения, доходы и других ключевых метриках, чтобы оценить свой прогресс и принимать информированные решения.
 
-### `npm start`
+ClientManager поможет вам эффективно организовать и упорядочить ваш бизнес, обеспечивая полный контроль над клиентскими данными, посещениями и доходами. Благодаря этому инструменту вы сможете лучше понять свою клиентскую базу, оптимизировать свое время и повысить уровень обслуживания.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<h3 align="left">Stack:</h3>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<ul>
+  <li>
+    <b>React</b>
+  </li>
+  <li>
+    <b>Redux Toolkit</b>
+  </li>
+  <li>
+    <b>Formik</b>
+  </li>
+  <li>
+    <b>React Router v6</b>
+  </li>
+  <li>
+    <b>FullCalendar</b>
+  </li>
+  <li>
+    <b>Recharts</b>
+  </li>
+  <li>
+    <b>Material UI</b>
+  </li>
+  <li>
+    <b>Axios</b>
+  </li>
+</ul>
 
-### `npm test`
+<h3 align="left">Backend:</h3>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<ul>
+  <li>
+    <a href="https://github.com/AzamatTash/React-ClientManager-backend"><b>ClientManager backend/b></a>
+  </li>
+</ul>
 
-### `npm run build`
+<h3 align="left">Deploy:</h3>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<ul>
+  <li>
+    <b>Vercel</b> -  <a href="react-admin-dashboard-blond.vercel.app/"><b></b></a>
+  </li>
+</ul>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<hr>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<h2>Install:</h2>
+<p>npm install</p>
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h2>Usage:</h2>
+<p>npm run start</p>

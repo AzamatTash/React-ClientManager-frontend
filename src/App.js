@@ -6,21 +6,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe } from './redux/slices/authMeSlice';
 import Topbar from './scenes/global/Topbar';
 import Main from './scenes/main';
-import MySidebar from './scenes/global/MySidebar';
+import MainSidebar from './scenes/global/MainSidebar';
 import Clients from './scenes/clients';
 import AddNewClient from './scenes/addClient';
 import Schedule from './scenes/schedule';
 import Login from './scenes/auth/Login';
 import Register from './scenes/auth/Register';
 import ErrorPage from './scenes/errorPage';
+import { useFetching } from './hooks/useFetching';
+import Api from './service/index';
 
 function App() {
 	const [theme, colorMode] = useMode();
 	const dispatch = useDispatch();
 	const { status, isAuth } = useSelector((state) => state.authMe);
+	const { fetching, data } = useFetching(async () => {
+		return await Api.getUser();
+	});
 
 	useEffect(() => {
 		dispatch(fetchAuthMe());
+		fetching();
 	}, []);
 
 	return (
@@ -32,7 +38,7 @@ function App() {
 						<main className='content'></main>
 					) : isAuth ? (
 						<>
-							<MySidebar />
+							<MainSidebar data={data} />
 							<main className='content'>
 								<Topbar />
 								<Routes>

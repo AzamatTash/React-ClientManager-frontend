@@ -22,16 +22,13 @@ const Clients = () => {
 	const isNonMobile = useMediaQuery('(min-width:600px)');
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
-
 	const [alertData, setAlertData] = useState({
 		type: 'info',
 		message: '',
 	});
 	const [isVisibleAlert, setIsVisibleAlert] = useState(false);
-
 	const dispatch = useDispatch();
 	const { data, status, errorMessage } = useSelector((state) => state.client);
-
 	const [isVisiblePopup, setIsVisiblePopup] = useState(false);
 
 	const handleDeleteClient = async (id) => {
@@ -162,14 +159,14 @@ const Clients = () => {
 			/>
 			<Header title='Клиенты' />
 
-			<Box display={'flex'} backgroundColor={colors.primary[400]} borderRadius={'3px'}>
+			{/* <Box display={'flex'} backgroundColor={colors.primary[400]} borderRadius={'3px'}>
 				<InputBase sx={{ ml: 2, flex: 1 }} placeholder={'Поиск'} />
 				<IconButton type={'button'} sx={{ p: 1 }}>
 					<SearchIcon />
 				</IconButton>
-			</Box>
+			</Box> */}
 
-			<Box m='20px 0 0 0' height='75vh' paddingBottom={'20px'} sx={getStyledDataGrid(colors)}>
+			<Box m='20px 0 0 0' height='80vh' paddingBottom={'20px'} sx={getStyledDataGrid(colors)}>
 				<DataGrid
 					rows={data ? data : []}
 					columns={columns}
