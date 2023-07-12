@@ -75,4 +75,4 @@ Client Manager поможет вам эффективно организоват
 <p>npm install</p>
 
 <h2>Usage:</h2>
-<p>npm run start</p>
+<p>npm start</p>
