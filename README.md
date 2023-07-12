@@ -1,4 +1,4 @@
-<h1 align="center">React Client Manager</h1>
+<h1 align="center">Client Manager</h1>
 
 ![admin-dashboard-1](https://github.com/AzamatTash/React-ClientManager-frontend/assets/91409425/cfa4c158-d941-4952-aabf-6bb94c8665ea)
 
