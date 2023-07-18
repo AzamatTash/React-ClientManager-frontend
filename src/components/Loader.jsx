@@ -7,8 +7,8 @@ const Loader = () => {
 		<Box
 			sx={{
 				position: 'absolute',
-				width: '100vw',
-				height: '100vh',
+				top: 'calc(50% - 20px)',
+				left: 'calc(50% - 20px)',
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',

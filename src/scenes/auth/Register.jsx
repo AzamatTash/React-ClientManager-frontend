@@ -3,13 +3,13 @@ import { Box, useTheme, Button, useMediaQuery } from '@mui/material';
 import { Formik } from 'formik';
 import { CheckoutSchema } from '../../utils/getCheckoutSchema';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchAuthMe } from '../../redux/slices/authMeSlice';
 import { fetchRegister } from '../../redux/slices/registerSlice';
 import AuthField from '../../components/customFields/AuthField';
 import AuthWrapper from './AuthWrapper';
 import AuthHeader from './AuthHeader';
 import AlertInfo from '../../components/AlertInfo';
-import { fetchAuthMe } from '../../redux/slices/authMeSlice';
-import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 	const isNonMobile = useMediaQuery('(min-width:530px)');

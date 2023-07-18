@@ -10,6 +10,9 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { useEffect } from 'react';
+import { useFetching } from '../../hooks/useFetching';
+import Api from '../../service';
 
 const Item = ({ title, to, icon, selected, setSelected, toggleSidebar }) => {
 	const theme = useTheme();
@@ -35,7 +38,7 @@ const Item = ({ title, to, icon, selected, setSelected, toggleSidebar }) => {
 	);
 };
 
-const MainSidebar = ({ data }) => {
+const MainSidebar = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
@@ -47,6 +50,18 @@ const MainSidebar = ({ data }) => {
 		'/add_clients': 'Добавление',
 	};
 	const [selected, setSelected] = useState(pathList[pathname]);
+	const [user, setUser] = useState({ firstName: '', lastName: '' });
+	const { fetching, data, isLoading } = useFetching(async () => {
+		return await Api.getUser();
+	});
+
+	useEffect(() => {
+		fetching();
+	}, []);
+
+	useEffect(() => {
+		setUser({ ...user, ...data });
+	}, [data]);
 
 	return (
 		<Box
@@ -130,7 +145,7 @@ const MainSidebar = ({ data }) => {
 									fontWeight='bold'
 									sx={{ m: '20px 0 0 0' }}
 								>
-									{data ? `${data?.firstName} ${data?.lastName}` : ''}
+									{`${user.firstName} ${user.lastName}`}
 								</Typography>
 								<Typography variant='h6' color={theme.palette.secondary.main}>
 									Администратор

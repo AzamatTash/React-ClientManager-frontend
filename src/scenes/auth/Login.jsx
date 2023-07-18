@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme, Button } from '@mui/material';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { CheckoutSchema } from '../../utils/getCheckoutSchema';
 import { fetchLogin } from '../../redux/slices/loginSlice';
 import { fetchAuthMe } from '../../redux/slices/authMeSlice';
+import AlertInfo from '../../components/AlertInfo';
 import AuthField from '../../components/customFields/AuthField';
 import AuthWrapper from './AuthWrapper';
 import AuthHeader from './AuthHeader';
-import AlertInfo from '../../components/AlertInfo';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const theme = useTheme();
@@ -80,7 +80,13 @@ const Login = () => {
 								handleChange={handleChange}
 								isPasswordField={true}
 							/>
-							<Button fullWidth type='submit' color='secondary' variant='contained'>
+							<Button
+								fullWidth
+								type='submit'
+								color='secondary'
+								variant='contained'
+								disabled={status === 'loading'}
+							>
 								Войти
 							</Button>
 						</form>

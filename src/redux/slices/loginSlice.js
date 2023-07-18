@@ -18,7 +18,6 @@ export const fetchLogin = createAsyncThunk(
 );
 
 const initialState = {
-	data: null,
 	status: 'error' | 'loading' | 'loaded',
 	errorMessage: null,
 };
@@ -30,17 +29,14 @@ const loginSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchLogin.pending, (state) => {
-				state.data = null;
 				state.status = 'loading';
 				state.errorMessage = null;
 			})
-			.addCase(fetchLogin.fulfilled, (state, action) => {
-				state.data = action.payload;
+			.addCase(fetchLogin.fulfilled, (state) => {
 				state.status = 'loaded';
 				state.errorMessage = null;
 			})
 			.addCase(fetchLogin.rejected, (state, action) => {
-				state.data = null;
 				state.status = 'error';
 				state.errorMessage = action.payload.message;
 			});

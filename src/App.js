@@ -13,20 +13,17 @@ import Schedule from './scenes/schedule';
 import Login from './scenes/auth/Login';
 import Register from './scenes/auth/Register';
 import ErrorPage from './scenes/errorPage';
-import { useFetching } from './hooks/useFetching';
-import Api from './service/index';
+import Loader from './components/Loader';
 
 function App() {
 	const [theme, colorMode] = useMode();
 	const dispatch = useDispatch();
 	const { status, isAuth } = useSelector((state) => state.authMe);
-	const { fetching, data } = useFetching(async () => {
-		return await Api.getUser();
-	});
 
 	useEffect(() => {
-		dispatch(fetchAuthMe());
-		fetching();
+		if (localStorage.getItem('token')) {
+			dispatch(fetchAuthMe());
+		}
 	}, []);
 
 	return (
@@ -35,10 +32,12 @@ function App() {
 				<CssBaseline />
 				<div className={'app'}>
 					{status === 'loading' ? (
-						<main className='content'></main>
+						<main className='content'>
+							<Loader />
+						</main>
 					) : isAuth ? (
 						<>
-							<MainSidebar data={data} />
+							<MainSidebar />
 							<main className='content'>
 								<Topbar />
 								<Routes>
